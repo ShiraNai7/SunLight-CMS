@@ -346,7 +346,12 @@ class Database
      */
     static function table(string $name): string
     {
-        return self::$prefix . $name;
+        $prefix = self::$prefix;
+        Extend::call('db.table_prefix', [
+            'table' => $name,
+            'prefix' => &$prefix
+        ]);
+        return $prefix . $name;
     }
 
     /**
